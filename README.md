@@ -9,14 +9,18 @@
 >
 > * Strimzi Kafka CLI:
 >
-> `sudo pip install strimzi-kafka-cli`
+> ```shell
+> sudo pip install strimzi-kafka-cli
+> ```
 >
 > * `oc` or `kubectl`
 >
-> Login to a Kubernetes or OpenShift cluster and create a new namespace/project called `reactive-coffeeshop-demo`.
+> Login to a Kubernetes or OpenShift cluster and create a new namespace/project called `kafka`.
 >
-> `oc new-project reactive-coffeeshop-demo`
->
+> ```shell
+> oc new-project kafka
+> ```
+> 
 > ### Install Apicurio Registry:
 >
 > You have two options for this:
@@ -33,21 +37,21 @@
 > `Skip this part if an operator is already installed in your Openshift/Kubernetes cluster.`
 >
 > ```shell
->  kfk operator --install -n reactive-coffeeshop-demo
+>  kfk operator --install -n kafka
 > ```
 >
 > After that, the operator is installed you can create a cluster:
 >
 > <!-- Prereq: https://github.com/systemcraftsman/strimzi-kafka-cli/issues/72 -->
 > ```shell
->  kfk clusters --create --cluster my-cluster --add-listener --listener-name external --listener-port 9094 --listener-type route --listener-tls true  -n reactive-coffeeshop-demo -y
+>  kfk clusters --create --cluster my-cluster --add-listener --listener-name external --listener-port 9094 --listener-type route --listener-tls true  -n kafka -y
 > ```
 >
 ## The Coffee Shop
 
 It's been a hard year because of the pandemic, and when you learn the lockdown is over, you want to go to the coffee shop you used to go before pandemic.
 
-<img width="604" alt="Screen Shot 2021-04-24 at 16 14 40" src="https://user-images.githubusercontent.com/10568159/120249950-2e68ef80-c285-11eb-9bd6-c52ada97ab6a.png">
+> TODO: Kaffe Shop external image here
 
 It will be seen as the same old coffee shop, but not be sure about that so much, you will see a lot changed.
 
@@ -57,12 +61,12 @@ It will be seen as the same old coffee shop, but not be sure about that so much,
 > git clone https://github.com/systemcraftsman/reactive-coffeeshop-demo.git
 > ```
 >
-> And don't forget to checkout the `original` repo. That's where we are gonna start:
+> Checkout the `base` repo. That's where we are gonna start:
 >
 > ```shell
 > cd reactive-coffeeshop-demo
 > 
-> git checkout original
+> git checkout base
 > ```
 >
 > After switching to the right branch, you need to specify the
@@ -82,7 +86,7 @@ It will be seen as the same old coffee shop, but not be sure about that so much,
 > ```
 >
 
-You want to order a favorite of yours, "frappucino" and a barista you know "Isla" takes care of your order.
+You want to order a favorite of yours, "cappuccino" and a barista you know "Isla" takes care of your order.
 
 > TODO: Instructions and image here
 
@@ -106,7 +110,7 @@ So I have to either prepare it in 1.5 seconds or never."
 You should order again".
 
 "Well that's weird" you think and Isla goes for a rest.
-You order your beloved frappucino again, again and again, but it fails, fails and fails.
+You order your beloved cappuccino again, again and again, but it fails, fails and fails.
 
 > TODO: Image here
 
@@ -117,7 +121,7 @@ After about 10 times or so, the new barista Zoe, could prepare your order within
 
 > TODO: Image A-team photo here
 
-While thinking about all these and taking a sip of your frappucino (you are trying to drink it slowly this time),
+While thinking about all these and taking a sip of your cappuccino (you are trying to drink it slowly this time),
 a man with a fedora hat, who will introduce himself later as "Kafka", walks into the coffee shop and sits beside you.
 
 Orders a "Chai" -actually by trying a couple of times- and faces the same problem.
@@ -154,7 +158,7 @@ but anyways, they are here, and they are either being chased by or fighting with
 Ghostbusters point their weird beam gun to the giant marshmallow man and fired.
 This made the giant marshmallow man blow up and literally everywhere is covered with marshmallow, including your idea to have your future beverages with marshmallow!
 
-When everything is calmed down, a few hours later, you order a frappucino again, this time with marshmallows(!).
+When everything is calmed down, a few hours later, you order a cappuccino again, this time with marshmallows(!).
 Because you think everything is already covered with marshmallows.
 The order goes into the queue with your marshmallows request.
 But when the order is ready, you see your order does not have any marshmallows included.
@@ -172,7 +176,7 @@ This makes a lot of sense to you. An agreement, a contract on what to include in
 So by gathering everyone who works in the shop, you write the contract together, and both orders and the beverages should include marshmallows from now on!
 You put the contract on the wall, everybody agreed upon it and on checking it out from time to time. So you think its now time for a beverage with marshmallows at last!
 
-You make another order and nice, you get your marshmallow frappucino! (Just be sure you don't be diabetic coma after all these).
+You make another order and nice, you get your marshmallow cappuccino! (Just be sure you don't be diabetic coma after all these).
 
 Since all the system works properly right now, you think it's a good time to play with the contract based coffee ordering.
 You want to see what happens if the contract changes.
