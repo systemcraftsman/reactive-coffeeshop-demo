@@ -1,90 +1,94 @@
-# A Man, called Kafka, walks into a coffee shop and...
+# A Man Called Kafka, Walks Into a Coffee Shop and...
 
+It has been a hard year because of the pandemic, and when you learn the lockdown is over, you want to go to the coffee shop you used to go before pandemic.
 
-> ## Pre-Demo Preparations
+![Coffee Shop](images/illustrations/kaffeshop.jpg)
+
+You might think it is the same old coffee shop, but don't be sure about that so much, you will see a lot has changed.
+
+> ## Prerequisites
 >
-> ### Install/Prepare the prereqs:
+> * A running OpenShift/Kubernetes cluster
 >
-> * A running Openshift/Kubernetes cluster
->
-> * Strimzi Kafka CLI:
+> * Strimzi Kafka CLI
 >
 > ```shell
 > sudo pip install strimzi-kafka-cli
 > ```
 >
-> * `oc` or `kubectl`
->
-> Login to a Kubernetes or OpenShift cluster and create a new namespace/project called `kafka`.
->
-> ```shell
-> oc new-project kafka
-> ```
+> * `oc` or `kubectl` CLI
 > 
-> ### Install Apicurio Registry:
+> * Apicurio registry
 >
-> You have two options for this:
+>   - Either follow the instructions [here](https://access.redhat.com/documentation/en-us/red_hat_integration/2020-q4/html/getting_started_with_service_registry/installing-registry-ocp).
+>   - Or follow this [guide](https://www.apicur.io/registry/docs/apicurio-registry/2.0.0.Final/getting-started/assembly-installing-registry-openshift.html).
 >
-> * Follow the instructions [here](https://access.redhat.com/documentation/en-us/red_hat_integration/2020-q4/html/getting_started_with_service_registry/installing-registry-ocp)
-> * Or follow this [guide](https://www.apicur.io/registry/docs/apicurio-registry/2.0.0.Final/getting-started/assembly-installing-registry-openshift.html)
+> In the end, you must have an Apicurio Registry up and running in the same namespace, with an accesible Route URL as follows:
 >
-> In the end you should have an Apicurio Registry up and running in the same namespace, with an accesible Route URL like the following:
+> `http://example-apicurioregistry.reactive-coffeeshop-demo.apps.ocpcluster.com/ui/artifacts`
 >
-> `http://example-apicurioregistry.reactive-coffeeshop-demo.apps.naxx-stage2.dev.nextcle.com/ui/artifacts`
+> * A Strimzi Operator up and running
 >
-> ### Install Strimzi Operator
->
-> `Skip this part if an operator is already installed in your Openshift/Kubernetes cluster.`
+> To install the Strimzi operator you can use the following Strimzi CLI command.
 >
 > ```shell
 >  kfk operator --install -n kafka
 > ```
+>---
+>**INFO**
 >
-> After that, the operator is installed you can create a cluster:
+>You can skip this part if you have a Strimzi or AMQ Streams operator already installed in your OpenShift/Kubernetes cluster.
 >
-> <!-- Prereq: https://github.com/systemcraftsman/strimzi-kafka-cli/issues/72 -->
-> ```shell
->  kfk clusters --create --cluster my-cluster --add-listener --listener-name external --listener-port 9094 --listener-type route --listener-tls true  -n kafka -y
-> ```
->
-## The Coffee Shop
+>---
 
-It's been a hard year because of the pandemic, and when you learn the lockdown is over, you want to go to the coffee shop you used to go before pandemic.
+## Creating a Kafka Cluster
 
-> TODO: Kaffe Shop external image here
+Log in to your Kubernetes/OpenShift cluster and create a new namespace/project called `kafka`.
 
-It will be seen as the same old coffee shop, but not be sure about that so much, you will see a lot changed.
+```shell
+oc new-project kafka
+```
 
-> First clone the `reactive-coffeeshop-demo` repository:
->
-> ```shell
-> git clone https://github.com/systemcraftsman/reactive-coffeeshop-demo.git
-> ```
->
-> Checkout the `base` repo. That's where we are gonna start:
->
-> ```shell
-> cd reactive-coffeeshop-demo
-> 
-> git checkout base
-> ```
->
-> After switching to the right branch, you need to specify the
->
-> Now run the `cofeeshop-service` and `barista-quarkus-http` service which are Quarkus applications.
->
-> First run the `coffeeshop-service`:
->
-> ```shell
->  cd cofeeshop-service
-> ```
->
-> In another terminal window, run the `barista-quarkus-http` service:
->
-> ```shell
->  cd cofeeshop-service
-> ```
->
+Create a Kafka cluster by running the following Strimzi CLI command.
+
+<!-- Prereq: https://github.com/systemcraftsman/strimzi-kafka-cli/issues/72 -->
+```shell
+kfk clusters --create --cluster my-cluster --add-listener --listener-name external --listener-port 9094 --listener-type route --listener-tls true  -n kafka -y
+```
+
+## Cloning and Running the Demo
+
+First clone the `reactive-coffeeshop-demo` repository:
+
+```shell
+git clone https://github.com/systemcraftsman/reactive-coffeeshop-demo.git
+```
+
+Checkout the `base` branch.
+This is the branch that you will develop the application on.
+
+```shell
+cd reactive-coffeeshop-demo && \
+
+git checkout base
+```
+
+Now run the `cofeeshop-service` and `barista-quarkus-http` service.
+Both services are Quarkus applications.
+
+Run the `coffeeshop-service`:
+
+```shell
+cd cofeeshop-service
+```
+
+In another terminal window, run the `barista-quarkus-http` service:
+
+```shell
+cd cofeeshop-service
+```
+
+## The Kaffe Shop
 
 You want to order a favorite of yours, "cappuccino" and a barista you know "Isla" takes care of your order.
 
